@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista ogłoszeń{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">Lista ogłoszeń</h1>
+
+<a href="{{ path('advertisement_new') }}" class="btn btn-primary mb-3">Dodaj nowe ogłoszenie</a>
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>Zdjęcia</th>
+            <th>Nazwa</th>
+            <th>Cena</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for advertisement in advertisements %}
+            <tr>
+                <td>
+                    {% if advertisement.images|length > 0 %}
+                        <img src="{{ asset('uploads/images/' ~ advertisement.images[0].filename) }}" alt="{{ advertisement.name }}" class="img-thumbnail" style="max-width: 100px; height: auto;">
+                    {% else %}
+                        <span class="text-muted">Brak zdjęć</span>
+                    {% endif %}
+                </td>
+                <td><a href="{{ path('advertisement_show', {'id': advertisement.id}) }}">{{ advertisement.name }}</a></td>
+                <td>{{ (advertisement.price / 100)|number_format(2, ',', ' ') }} PLN</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="3">Brak ogłoszeń.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

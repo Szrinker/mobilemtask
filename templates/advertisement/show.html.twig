@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Podgląd ogłoszenia{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">{{ advertisement.name }}</h1>
+        <p class="card-text">{{ advertisement.description }}</p>
+        <p class="card-text"><strong>Cena:</strong> {{ (advertisement.price / 100)|number_format(2, ',', ' ') }} PLN</p>
+
+        <h2>Zdjęcia</h2>
+        <div class="row">
+            {% for image in advertisement.images %}
+                <div class="col-6 col-md-4 col-lg-4 mb-3">
+                    <img src="{{ asset('uploads/images/' ~ image.filename) }}" alt="{{ advertisement.name }}" class="img-fluid img-thumbnail rounded">
+                </div>
+            {% else %}
+                <p>Brak zdjęć.</p>
+            {% endfor %}
+        </div>
+
+        <a href="{{ path('advertisement_index') }}" class="btn btn-link mt-3">Powrót do listy</a>
+    </div>
+</div>
+{% endblock %}
